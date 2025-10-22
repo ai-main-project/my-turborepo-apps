@@ -133,3 +133,23 @@ Learn more about the power of Turborepo:
 - [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
 - [Configuration Options](https://turborepo.com/docs/reference/configuration)
 - [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+
+
+# 在工作区安装包
+npm install <package> --workspace=<workspace>
+
+# 示例
+npm install react --workspace=web
+
+# 在工作区删除包
+npm uninstall <package> --workspace=<workspace>
+
+# 示例
+npm uninstall react --workspace=web
+
+# 在工作区更新包
+npm update <package> --workspace=<workspace>
+
+# 示例
+npm update react --workspace=web
+
