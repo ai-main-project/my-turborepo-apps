@@ -29,7 +29,7 @@ export default function Home() {
 
   const handleSubmit = () => {
     createPostMutation.mutate({
-      title: '我的新文章',
+      title: '我的新文章' + new Date().getTime(),
       content: 'tRPC 真是太棒了！',
       
       // 🔥 类型安全：如果你在这里添加一个后端 .input() 中没有的字段
@@ -51,7 +51,7 @@ export default function Home() {
       <h1>文章列表</h1>
       <ul>
         {posts?.map((post) => (
-          <li key={post.id}>{post.title}</li>
+          <li key={post.id}>{post.title}--------------{post.content}</li>
         ))}
       </ul>
       

@@ -11,6 +11,8 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@clerk/localizations": "^3.26.2",
+    "@clerk/nextjs": "^6.33.7",
     "@repo/ui": "*",
     "@tanstack/react-query": "^5.90.5",
     "@trpc/client": "^11.6.0",
