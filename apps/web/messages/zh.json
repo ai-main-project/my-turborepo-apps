@@ -1,0 +1,22 @@
+{
+  "Common": {
+    "home": "首页",
+    "posts": "文章",
+    "about": "关于",
+    "menu": "菜单",
+    "readMore": "阅读文章",
+    "aboutMe": "关于我",
+    "viewAll": "查看所有 →",
+    "latestArticles": "最新文章",
+    "latestSubtitle": "关于开发、设计和工作流的思考。",
+    "footerBrand": "探索代码、设计和 Web 开发的未来。",
+    "navigation": "导航",
+    "social": "社交",
+    "rights": "保留所有权利。"
+  },
+  "Hero": {
+    "title1": "设计. 代码.",
+    "title2": "创造.",
+    "subtitle": "探索设计工程、用户体验和现代 Web 技术交汇的数字花园。"
+  }
+}

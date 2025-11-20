@@ -1,0 +1,22 @@
+{
+  "Common": {
+    "home": "Home",
+    "posts": "Posts",
+    "about": "About",
+    "menu": "Menu",
+    "readMore": "Read Articles",
+    "aboutMe": "About Me",
+    "viewAll": "View All Posts →",
+    "latestArticles": "Latest Articles",
+    "latestSubtitle": "Thoughts on development, design, and workflow.",
+    "footerBrand": "Exploring code, design, and the future of web development.",
+    "navigation": "Navigation",
+    "social": "Social",
+    "rights": "All rights reserved."
+  },
+  "Hero": {
+    "title1": "Design. Code.",
+    "title2": "Create.",
+    "subtitle": "A digital garden exploring the intersection of design engineering, user experience, and modern web technologies."
+  }
+}

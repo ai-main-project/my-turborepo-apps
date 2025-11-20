@@ -1,0 +1,77 @@
+.hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+.title {
+    font-size: 5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.03em;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.6;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* Background Elements */
+.glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: var(--glow-primary);
+    filter: blur(100px);
+    opacity: 0.15;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    animation: pulse 10s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.1;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+
+    100% {
+        opacity: 0.2;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 3rem;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+    }
+}

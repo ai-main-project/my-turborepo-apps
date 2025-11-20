@@ -3,6 +3,7 @@
 
 import { UserButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
+import LocalSwitcher from './LocalSwitcher';
 
 export function Header() {
   const { isSignedIn } = useUser(); // 检查用户是否登录
@@ -10,6 +11,7 @@ export function Header() {
   return (
     <header style={{ display: 'flex', justifyContent: 'space-between', padding: '20px' }}>
       <Link href="/">首页</Link>
+      <LocalSwitcher />
       <div>
         {isSignedIn ? (
           <UserButton /> // 登录后显示用户按钮

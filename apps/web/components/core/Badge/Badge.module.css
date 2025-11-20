@@ -1,0 +1,18 @@
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-glass);
+    color: var(--text-muted);
+    backdrop-filter: blur(var(--blur-glass));
+}
+
+.badge:hover {
+    background: var(--bg-panel-hover);
+    color: var(--text-main);
+    border-color: var(--border-glass-strong);
+}
