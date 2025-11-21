@@ -18,5 +18,17 @@
     "title1": "设计. 代码.",
     "title2": "创造.",
     "subtitle": "探索设计工程、用户体验和现代 Web 技术交汇的数字花园。"
+  },
+  "About": {
+    "title": "关于我",
+    "bio": "我是一名热衷于构建美观、易用且高性能 Web 体验的开发者和设计师。凭借工程和设计的双重背景，我致力于弥合代码与创意之间的鸿沟。",
+    "connect": "保持联系",
+    "newsletterTitle": "订阅我的通讯",
+    "newsletterDesc": "获取最新的文章和见解，直接发送到您的收件箱。",
+    "emailPlaceholder": "your@email.com",
+    "subscribe": "订阅",
+    "subscribing": "订阅中...",
+    "success": "感谢订阅！",
+    "error": "出错了，请重试。"
   }
 }

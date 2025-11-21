@@ -1,0 +1,27 @@
+.gameContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    font-family: monospace;
+}
+
+.scoreBoard {
+    display: flex;
+    gap: 2rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--foreground);
+}
+
+.canvas {
+    border: 2px solid var(--foreground);
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.instructions {
+    font-size: 1.2rem;
+    color: var(--foreground);
+}
