@@ -60,7 +60,7 @@ export default function HomePage() {
           <h2 className="text-4xl sm:text-5xl font-bold text-[#000000] dark:text-[#FFFFFF] mb-4 tracking-tight">
             {t("subtitle")}
           </h2>
-          <p className="text-lg text-[#525252] dark:text-[#E5E5E5]">
+          <p className="text-lg text-[#262626] dark:text-[#E5E5E5]">
             {t("description")}
           </p>
         </motion.div>
