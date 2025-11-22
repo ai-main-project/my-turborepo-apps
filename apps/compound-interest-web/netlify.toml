@@ -1,0 +1,41 @@
+[build]
+  # 构建命令
+  command = "cd ../.. && npm run build --filter=compound-interest-web"
+  
+  # 发布目录（Next.js 的输出目录）
+  publish = ".next"
+  
+  # 基础目录（项目在 monorepo 中的位置）
+  base = "apps/compound-interest-web"
+
+[build.environment]
+  # Node.js 版本
+  NODE_VERSION = "18"
+  
+  # 启用 Next.js 缓存
+  NPM_FLAGS = "--legacy-peer-deps"
+
+# Next.js 运行时配置
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# 重定向规则（支持国际化路由）
+[[redirects]]
+  from = "/"
+  to = "/zh"
+  status = 302
+  force = false
+
+[[redirects]]
+  from = "/*"
+  to = "/:splat"
+  status = 200
+
+# Headers 配置（安全和性能优化）
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"

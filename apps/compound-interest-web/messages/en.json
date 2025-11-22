@@ -1,0 +1,26 @@
+{
+  "HomePage": {
+    "title": "Compound Interest Calculator",
+    "subtitle": "Visualize the power of compound interest",
+    "theme": "Theme",
+    "language": "Language",
+    "description": "Watch your money grow with the magic of compound interest. Visualize your financial future today."
+  },
+  "Calculator": {
+    "principal": "Initial Principal",
+    "rate": "Interest Rate (%)",
+    "time": "Time (Years)",
+    "contribution": "Annual Contribution",
+    "calculate": "Calculate",
+    "currencySymbol": "$"
+  },
+  "Results": {
+    "total": "Total Amount",
+    "interest": "Total Interest",
+    "breakdown": "Yearly Breakdown",
+    "year": "Year",
+    "balance": "Balance",
+    "contributions": "Contributions",
+    "currencySymbol": "$"
+  }
+}

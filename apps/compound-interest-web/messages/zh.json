@@ -1,0 +1,26 @@
+{
+  "HomePage": {
+    "title": "复利计算器",
+    "subtitle": "可视化复利的力量",
+    "theme": "主题",
+    "language": "语言",
+    "description": "通过复利的魔力见证您的财富增长。立即规划您的财务未来。"
+  },
+  "Calculator": {
+    "principal": "初始本金",
+    "rate": "年利率 (%)",
+    "time": "时间 (年)",
+    "contribution": "每年追加",
+    "calculate": "计算",
+    "currencySymbol": "¥"
+  },
+  "Results": {
+    "total": "总金额",
+    "interest": "总利息",
+    "breakdown": "年度明细",
+    "year": "年份",
+    "balance": "余额",
+    "contributions": "本金投入",
+    "currencySymbol": "¥"
+  }
+}
