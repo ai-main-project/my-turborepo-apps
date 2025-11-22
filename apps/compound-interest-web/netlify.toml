@@ -1,11 +1,9 @@
 [build]
   # 构建命令 - 在根目录安装依赖并构建特定应用
-  command = "npm install && npx turbo run build --filter=compound-interest-web"
+  command = "cd ../.. && npm install && npx turbo run build --filter=compound-interest-web"
   
-  # 发布目录（Next.js 的输出目录）
-  publish = "apps/compound-interest-web/.next"
-  
-  # 不设置 base，从根目录执行构建
+  # 发布目录（相对于 base 目录的路径）
+  publish = ".next"
 
 [build.environment]
   # Node.js 版本
