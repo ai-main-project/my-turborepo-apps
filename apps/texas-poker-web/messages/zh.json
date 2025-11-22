@@ -1,0 +1,19 @@
+{
+  "Lobby": {
+    "title": "德州扑克",
+    "createTable": "创建牌桌",
+    "joinTable": "加入",
+    "enterName": "输入昵称",
+    "tables": "牌桌列表"
+  },
+  "Game": {
+    "pot": "底池",
+    "call": "跟注",
+    "raise": "加注",
+    "fold": "弃牌",
+    "check": "过牌",
+    "allIn": "全押",
+    "waiting": "等待玩家...",
+    "start": "开始游戏"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "Lobby": {
+    "title": "Texas Hold'em Poker",
+    "createTable": "Create Table",
+    "joinTable": "Join",
+    "enterName": "Enter your name",
+    "tables": "Tables"
+  },
+  "Game": {
+    "pot": "Pot",
+    "call": "Call",
+    "raise": "Raise",
+    "fold": "Fold",
+    "check": "Check",
+    "allIn": "All In",
+    "waiting": "Waiting for players...",
+    "start": "Start Game"
+  }
+}

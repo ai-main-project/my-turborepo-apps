@@ -1,0 +1,40 @@
+FROM node:18-alpine AS base
+
+FROM base AS builder
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+RUN npm install turbo --global
+COPY . .
+RUN turbo prune --scope=texas-poker-web --docker
+
+FROM base AS installer
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+
+COPY .gitignore .gitignore
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/package-lock.json ./package-lock.json
+RUN npm install
+
+COPY --from=builder /app/out/full/ .
+COPY turbo.json turbo.json
+
+RUN npx turbo run build --filter=texas-poker-web...
+
+FROM base AS runner
+WORKDIR /app
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+USER nextjs
+
+COPY --from=installer /app/apps/texas-poker-web/next.config.mjs .
+COPY --from=installer /app/apps/texas-poker-web/package.json .
+
+# Automatically leverage output traces to reduce image size
+COPY --from=installer --chown=nextjs:nodejs /app/apps/texas-poker-web/.next/standalone ./
+COPY --from=installer --chown=nextjs:nodejs /app/apps/texas-poker-web/.next/static ./apps/texas-poker-web/.next/static
+COPY --from=installer --chown=nextjs:nodejs /app/apps/texas-poker-web/public ./apps/texas-poker-web/public
+COPY --from=installer --chown=nextjs:nodejs /app/apps/texas-poker-web/messages ./apps/texas-poker-web/messages
+
+CMD ["node", "apps/texas-poker-web/server.js"]
