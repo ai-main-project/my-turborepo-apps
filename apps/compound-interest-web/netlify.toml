@@ -1,19 +1,21 @@
 [build]
-  # 构建命令
-  command = "cd ../.. && npm run build --filter=compound-interest-web"
+  # 构建命令 - 在根目录安装依赖并构建特定应用
+  command = "npm install && npx turbo run build --filter=compound-interest-web"
   
   # 发布目录（Next.js 的输出目录）
-  publish = ".next"
+  publish = "apps/compound-interest-web/.next"
   
-  # 基础目录（项目在 monorepo 中的位置）
-  base = "apps/compound-interest-web"
+  # 不设置 base，从根目录执行构建
 
 [build.environment]
   # Node.js 版本
   NODE_VERSION = "18"
   
-  # 启用 Next.js 缓存
+  # NPM 配置
   NPM_FLAGS = "--legacy-peer-deps"
+  
+  # 跳过 Husky 钩子（如果有）
+  HUSKY = "0"
 
 # Next.js 运行时配置
 [[plugins]]
