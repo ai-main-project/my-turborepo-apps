@@ -30,5 +30,45 @@
     "subscribing": "订阅中...",
     "success": "感谢订阅！",
     "error": "出错了，请重试。"
+  },
+  "Blog": {
+    "title": "博客",
+    "create": "创建新文章",
+    "edit": "编辑文章",
+    "save": "保存文章",
+    "saving": "保存中...",
+    "form": {
+      "title": "标题",
+      "slug": "别名 (Slug)",
+      "excerpt": "摘要",
+      "tags": "标签",
+      "content": "内容 (Markdown)",
+      "preview": "预览"
+    },
+    "placeholders": {
+      "title": "文章标题",
+      "slug": "article-slug",
+      "excerpt": "简短描述...",
+      "tags": "技术, 生活, 编程 (逗号分隔)",
+      "content": "# 你好，世界"
+    },
+    "backToBlog": "返回博客列表"
+  },
+  "Resume": {
+    "experience": "工作经历",
+    "skills": "技能专长",
+    "present": "至今",
+    "roles": {
+      "senior": "高级前端工程师",
+      "developer": "前端开发工程师"
+    },
+    "companies": {
+      "techCorp": "科技公司",
+      "startup": "初创企业"
+    },
+    "descriptions": {
+      "senior": "带领前端团队，使用 React 和 Next.js 构建可扩展的 Web 应用。架构核心设计系统，并将站点性能提升了 40%。",
+      "developer": "开发主要产品仪表板的关键功能。与设计师紧密合作，实现像素级完美的 UI。"
+    }
   }
 }

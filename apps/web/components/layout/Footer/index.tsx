@@ -21,7 +21,7 @@ export const Footer = () => {
                             <h4>{t('navigation')}</h4>
                             <ul>
                                 <li><Link href="/">{t('home')}</Link></li>
-                                <li><Link href="/posts">{t('posts')}</Link></li>
+                                <li><Link href="/blog">{t('posts')}</Link></li>
                                 <li><Link href="/about">{t('about')}</Link></li>
                             </ul>
                         </div>

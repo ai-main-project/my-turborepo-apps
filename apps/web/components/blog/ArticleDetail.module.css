@@ -1,0 +1,228 @@
+.article {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-xl);
+    padding: 3rem;
+    backdrop-filter: blur(var(--blur-glass));
+    box-shadow: var(--shadow-glass);
+}
+
+.actions {
+    margin-bottom: 2rem;
+}
+
+.header {
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--border-glass);
+    padding-bottom: 2rem;
+    text-align: center;
+}
+
+.coverImageContainer {
+    margin: -3rem -3rem 2rem -3rem;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    overflow: hidden;
+    aspect-ratio: 21/9;
+}
+
+.coverImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.title {
+    font-size: 3rem;
+    line-height: 1.2;
+    color: var(--text-main);
+    margin-bottom: 1.5rem;
+    background: linear-gradient(to right, var(--text-main), var(--text-muted));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    color: var(--text-dim);
+    font-size: 0.95rem;
+}
+
+.date {
+    font-family: monospace;
+}
+
+.tags {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tag {
+    color: var(--primary);
+    background: rgba(124, 58, 237, 0.08);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.tag:hover {
+    background: rgba(124, 58, 237, 0.15);
+}
+
+.content {
+    color: var(--text-main);
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.content h1,
+.content h2,
+.content h3,
+.content h4 {
+    margin-top: 2.5rem;
+    margin-bottom: 1.2rem;
+    color: var(--text-main);
+    font-weight: 700;
+}
+
+.content h1 {
+    font-size: 2.2rem;
+}
+
+.content h2 {
+    font-size: 1.8rem;
+    border-bottom: 1px solid var(--border-glass);
+    padding-bottom: 0.5rem;
+}
+
+.content h3 {
+    font-size: 1.5rem;
+}
+
+.content p {
+    margin-bottom: 1.8rem;
+}
+
+.content ul,
+.content ol {
+    margin-bottom: 1.8rem;
+    padding-left: 1.8rem;
+}
+
+.content li {
+    margin-bottom: 0.6rem;
+    padding-left: 0.5rem;
+}
+
+.content li::marker {
+    color: var(--primary);
+}
+
+.content code {
+    background: rgba(124, 58, 237, 0.1);
+    color: var(--primary);
+    padding: 0.2rem 0.4rem;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9em;
+}
+
+.content pre {
+    background: #0d1117;
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    overflow-x: auto;
+    margin: 2rem 0;
+    border: 1px solid var(--border-glass);
+}
+
+.content pre code {
+    background: transparent;
+    padding: 0;
+    color: inherit;
+    font-size: 0.9rem;
+}
+
+.content blockquote {
+    border-left: 4px solid var(--primary);
+    background: rgba(124, 58, 237, 0.05);
+    padding: 1.5rem;
+    margin: 2rem 0;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    color: var(--text-main);
+    font-style: italic;
+}
+
+.content img {
+    max-width: 100%;
+    border-radius: var(--radius-lg);
+    margin: 2rem 0;
+    box-shadow: var(--shadow-glass);
+}
+
+.content a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+    transition: color 0.2s;
+}
+
+.content a:hover {
+    color: var(--secondary);
+}
+
+.content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+}
+
+.content th,
+.content td {
+    padding: 0.75rem;
+    border: 1px solid var(--border-glass);
+    text-align: left;
+}
+
+.content th {
+    background: rgba(0, 0, 0, 0.05);
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .article {
+        padding: 1.5rem;
+    }
+
+    .coverImageContainer {
+        margin: -1.5rem -1.5rem 1.5rem -1.5rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .content {
+        font-size: 1rem;
+    }
+
+    .content h1 {
+        font-size: 1.8rem;
+    }
+
+    .content h2 {
+        font-size: 1.5rem;
+    }
+
+    .content h3 {
+        font-size: 1.25rem;
+    }
+}

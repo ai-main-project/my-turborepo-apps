@@ -2,6 +2,7 @@ import React from 'react';
 import { Profile } from '@/components/about/Profile';
 import { Contact } from '@/components/about/Contact';
 import { Newsletter } from '@/components/about/Newsletter';
+import { Resume } from '@/components/about/Resume';
 
 export default function AboutPage() {
     return (
@@ -14,6 +15,7 @@ export default function AboutPage() {
             gap: '2rem'
         }}>
             <Profile />
+            <Resume />
 
             <div style={{
                 display: 'grid',

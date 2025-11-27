@@ -18,6 +18,10 @@ export default clerkMiddleware(async (auth, req) => {
     await auth.protect();
   }
 
+  if (req.nextUrl.pathname.startsWith('/api') || req.nextUrl.pathname.startsWith('/trpc')) {
+    return;
+  }
+
   return intlMiddleware(req);
 });
 

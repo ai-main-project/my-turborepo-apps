@@ -30,5 +30,45 @@
     "subscribing": "Subscribing...",
     "success": "Thanks for subscribing!",
     "error": "Something went wrong. Please try again."
+  },
+  "Blog": {
+    "title": "Blog",
+    "create": "Create New Article",
+    "edit": "Edit Article",
+    "save": "Save Article",
+    "saving": "Saving...",
+    "form": {
+      "title": "Title",
+      "slug": "Slug",
+      "excerpt": "Excerpt",
+      "tags": "Tags",
+      "content": "Content (Markdown)",
+      "preview": "Preview"
+    },
+    "placeholders": {
+      "title": "Article Title",
+      "slug": "article-slug",
+      "excerpt": "Brief description...",
+      "tags": "tech, life, coding (comma separated)",
+      "content": "# Hello World"
+    },
+    "backToBlog": "Back to Blog"
+  },
+  "Resume": {
+    "experience": "Experience",
+    "skills": "Skills",
+    "present": "Present",
+    "roles": {
+      "senior": "Senior Frontend Engineer",
+      "developer": "Frontend Developer"
+    },
+    "companies": {
+      "techCorp": "Tech Corp",
+      "startup": "Startup Inc"
+    },
+    "descriptions": {
+      "senior": "Leading the frontend team, building scalable web applications using React and Next.js. Architected the core design system and improved site performance by 40%.",
+      "developer": "Developed key features for the main product dashboard. Collaborated closely with designers to implement pixel-perfect UIs."
+    }
   }
 }

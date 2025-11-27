@@ -23,7 +23,7 @@ export const Hero = () => {
                 </p>
 
                 <div className={styles.actions}>
-                    <Link href="/posts">
+                    <Link href="/blog">
                         <Button size="lg">{tCommon('readMore')}</Button>
                     </Link>
                     <Link href="/about">
