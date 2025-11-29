@@ -1,0 +1,59 @@
+# .github/workflows/deploy.yml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]        # 或者 master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0                     # Turborepo 缓存需要
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'                      # 如果你用 pnpm；否则改 npm/yarn
+
+      - name: Install npm
+        if: contains(steps.setup-node.outputs.cache, 'npm') == false
+        run: corepack enable && corepack prepare npm@latest --activate
+
+      - name: Install dependencies
+        run: npm install --frozen-lockfile
+
+      - name: Turbo Cache
+        id: turbo-cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules/.cache/turbo
+          key: turbo-${{ github.sha }}
+          restore-keys: |
+            turbo-
+
+      - name: Build web app only
+        run: npx turbo run build --filter=web   # 把 web 改成你实际的 app name
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # 改成你实际的输出目录
+          path: apps/web/.next                    # Next.js 的话可能是 .next 或 out
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
