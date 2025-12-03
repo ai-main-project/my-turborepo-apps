@@ -1,4 +1,4 @@
-import { Deck, ITable, IPlayer, GameStage, PlayerStatus } from 'poker-shared';
+import { Deck, ITable, IPlayer, GameStage, PlayerStatus, HandEvaluator } from 'poker-shared';
 import { v4 as uuidv4 } from 'uuid';
 
 export class GameManager {
@@ -22,7 +22,7 @@ export class GameManager {
       smallBlind: 10,
       bigBlind: 20,
       stage: GameStage.PreFlop,
-      minRaise: 20,
+      minRaise: 40, // Minimum raise is 2x big blind initially
       lastRaise: 0,
     };
     this.tables.set(id, table);
@@ -65,10 +65,25 @@ export class GameManager {
 
   removePlayer(socketId: string): void {
     for (const table of this.tables.values()) {
-      const index = table.players.findIndex((p) => p.id === socketId);
-      if (index !== -1) {
-        table.players.splice(index, 1);
-        // TODO: Handle player leaving mid-game (fold hand, etc.)
+      const player = table.players.find((p) => p.id === socketId);
+      if (player) {
+        // If player is in active game, fold them instead of removing
+        if (table.stage !== GameStage.PreFlop || player.holeCards.length > 0) {
+          console.log(`Player ${player.name} disconnected mid-game, auto-folding`);
+          player.status = PlayerStatus.Folded;
+          
+          // If it was their turn, move to next player
+          if (table.currentTurn === socketId) {
+            this.nextTurn(table);
+          }
+        } else {
+          // Not in active game, safe to remove
+          const index = table.players.findIndex((p) => p.id === socketId);
+          if (index !== -1) {
+            table.players.splice(index, 1);
+            console.log(`Player removed from table`);
+          }
+        }
         break;
       }
     }
@@ -144,10 +159,53 @@ export class GameManager {
     const actualAmount = Math.min(player.chips, amount);
     player.chips -= actualAmount;
     player.currentBet += actualAmount;
+    
+    // Add to pot (will be properly split into side pots at end of round)
     table.pots[0].amount += actualAmount;
     
     if (player.chips === 0) {
       player.status = PlayerStatus.AllIn;
+      // Trigger side pot calculation
+      this.calculateSidePots(table);
+    }
+  }
+
+  private calculateSidePots(table: ITable): void {
+    // Get all players with bets
+    const playersWithBets = table.players
+      .filter(p => p.currentBet > 0)
+      .sort((a, b) => a.currentBet - b.currentBet);
+
+    if (playersWithBets.length === 0) return;
+
+    // Reset pots
+    const newPots: { amount: number; eligiblePlayers: string[] }[] = [];
+    let remainingPlayers = [...playersWithBets];
+    let previousBetLevel = 0;
+
+    // Create pots for each bet level
+    for (let i = 0; i < playersWithBets.length; i++) {
+      const currentPlayer = playersWithBets[i];
+      const betLevel = currentPlayer.currentBet;
+
+      if (betLevel > previousBetLevel && remainingPlayers.length > 0) {
+        const potAmount = (betLevel - previousBetLevel) * remainingPlayers.length;
+        newPots.push({
+          amount: potAmount,
+          eligiblePlayers: remainingPlayers
+            .filter(p => p.status !== PlayerStatus.Folded)
+            .map(p => p.id)
+        });
+        previousBetLevel = betLevel;
+      }
+
+      // Remove this player from remaining (they can't win more)
+      remainingPlayers = remainingPlayers.filter(p => p.id !== currentPlayer.id);
+    }
+
+    // Only update if we have side pots
+    if (newPots.length > 0) {
+      table.pots = newPots;
     }
   }
 
@@ -163,28 +221,69 @@ export class GameManager {
     const player = table.players.find((p) => p.id === action.playerId);
     if (!player) return;
 
-    // TODO: Validate action logic (e.g. can check? is raise valid?)
+    const maxBet = Math.max(...table.players.map(p => p.currentBet));
+    const callAmount = maxBet - player.currentBet;
     
     switch (action.type) {
       case 'fold':
         player.status = PlayerStatus.Folded;
         break;
+        
       case 'check':
-        // Check is only valid if currentBet == lastRaise (or 0 if no bets)
+        // Check only valid if no bet to call
+        if (callAmount > 0) {
+          console.log('Cannot check, must call or fold');
+          return;
+        }
         break;
+        
       case 'call':
-        const callAmount = table.lastRaise - player.currentBet;
+        // Validate call amount
+        if (callAmount <= 0) {
+          console.log('Nothing to call');
+          return;
+        }
         this.placeBet(table, player, callAmount);
         break;
+        
       case 'raise':
-        if (!action.amount) return;
-        const raiseAmount = action.amount; // Total bet amount
-        // Diff to add
-        const diff = raiseAmount - player.currentBet;
-        this.placeBet(table, player, diff);
-        table.lastRaise = raiseAmount;
-        table.minRaise = raiseAmount * 2; // Simplified min-raise logic
+        if (!action.amount) {
+          console.log('Raise amount required');
+          return;
+        }
+        
+        const totalBet = action.amount; // Total bet amount
+        const additionalAmount = totalBet - player.currentBet;
+        
+        // Validate raise meets minimum
+        if (totalBet < table.minRaise) {
+          console.log(`Raise must be at least ${table.minRaise}`);
+          return;
+        }
+        
+        // Validate player has enough chips
+        if (additionalAmount > player.chips) {
+          console.log('Not enough chips');
+          return;
+        }
+        
+        this.placeBet(table, player, additionalAmount);
+        table.lastRaise = totalBet;
+        // Update minimum raise (previous raise + raise increment)
+        const raiseIncrement = totalBet - maxBet;
+        table.minRaise = totalBet + raiseIncrement;
+        
+        // Reset hasActed for all other active players (they need to respond to raise)
+        table.players.forEach(p => {
+          if (p.id !== player.id && p.status === PlayerStatus.Active) {
+            p.hasActed = false;
+          }
+        });
         break;
+        
+      default:
+        console.log('Unknown action type:', action.type);
+        return;
     }
 
     player.hasActed = true;
@@ -262,9 +361,9 @@ export class GameManager {
         break;
       case GameStage.River:
         table.stage = GameStage.Showdown;
-        // Determine winner
-        // TODO: Implement showdown logic using HandEvaluator
-        break;
+        // Determine winner(s) and distribute chips
+        this.handleShowdown(table);
+        return; // Don't set next turn, game is over
     }
 
     // Set turn to first active player after dealer
@@ -273,5 +372,80 @@ export class GameManager {
       nextIndex = (nextIndex + 1) % table.players.length;
     }
     table.currentTurn = table.players[nextIndex].id;
+  }
+
+  private handleShowdown(table: ITable): void {
+    // Get all players still in the hand (not folded)
+    const activePlayers = table.players.filter(
+      p => p.status === PlayerStatus.Active || p.status === PlayerStatus.AllIn
+    );
+
+    if (activePlayers.length === 0) {
+      console.log('No active players in showdown');
+      return;
+    }
+
+    // If only one player left, they win everything
+    if (activePlayers.length === 1) {
+      const winner = activePlayers[0];
+      const totalPot = table.pots.reduce((sum, pot) => sum + pot.amount, 0);
+      winner.chips += totalPot;
+      console.log(`${winner.name} wins ${totalPot} chips (everyone else folded)`);
+      return;
+    }
+
+    // Evaluate all hands
+    const playerHands = activePlayers.map(player => ({
+      player,
+      hand: HandEvaluator.evaluate(player.holeCards, table.communityCards)
+    }));
+
+    // Sort by hand value (descending)
+    playerHands.sort((a, b) => b.hand.value - a.hand.value);
+
+    // Distribute each pot to eligible winners
+    for (const pot of table.pots) {
+      // Find eligible players for this pot
+      const eligibleHands = playerHands.filter(ph => 
+        pot.eligiblePlayers.includes(ph.player.id)
+      );
+
+      if (eligibleHands.length === 0) continue;
+
+      // Find best hand value among eligible players
+      const bestValue = eligibleHands[0].hand.value;
+      
+      // Find all winners (could be multiple if tie)
+      const winners = eligibleHands.filter(ph => ph.hand.value === bestValue);
+      
+      // Split pot among winners
+      const amountPerWinner = Math.floor(pot.amount / winners.length);
+      const remainder = pot.amount % winners.length;
+
+      winners.forEach((winner, index) => {
+        let winAmount = amountPerWinner;
+        // Give remainder to first winner (arbitrary but fair)
+        if (index === 0) winAmount += remainder;
+        
+        winner.player.chips += winAmount;
+        console.log(`${winner.player.name} wins ${winAmount} chips with ${this.getHandName(winner.hand.rank)}`);
+      });
+    }
+  }
+
+  private getHandName(rank: number): string {
+    const names = [
+      'High Card',
+      'One Pair', 
+      'Two Pair',
+      'Three of a Kind',
+      'Straight',
+      'Flush',
+      'Full House',
+      'Four of a Kind',
+      'Straight Flush',
+      'Royal Flush'
+    ];
+    return names[rank] || 'Unknown';
   }
 }

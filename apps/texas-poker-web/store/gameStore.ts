@@ -26,7 +26,8 @@ export const useGameStore = create<GameState>((set, get) => ({
   connect: () => {
     if (get().socket) return;
 
-    const socket = io('http://localhost:3001');
+    const serverUrl = process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3001';
+    const socket = io(serverUrl);
 
     socket.on('connect', () => {
       set({ isConnected: true });

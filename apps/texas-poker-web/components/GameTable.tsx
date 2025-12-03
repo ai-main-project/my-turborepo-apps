@@ -44,7 +44,7 @@ export const GameTable = ({ table, currentPlayer }: GameTableProps) => {
                         <Card key={i} card={card} />
                     ))}
                     {table.communityCards.length === 0 && (
-                        <div className="text-slate-500 font-bold tracking-widest uppercase opacity-50">Texas Hold'em</div>
+                        <div className="text-slate-500 font-bold tracking-widest uppercase opacity-50">Texas Hold&apos;em</div>
                     )}
                 </div>
 
@@ -114,10 +114,10 @@ export const GameTable = ({ table, currentPlayer }: GameTableProps) => {
                         )}
 
                         <button
-                            onClick={() => handleAction(ActionType.Raise, (currentPlayer?.currentBet || 0) + minRaise)}
+                            onClick={() => handleAction(ActionType.Raise, maxBet + minRaise)}
                             className="px-6 py-2 bg-yellow-600 rounded font-bold hover:bg-yellow-700"
                         >
-                            {t('raise')} ${minRaise}
+                            {t('raise')} ${maxBet + minRaise}
                         </button>
                     </>
                 )}
