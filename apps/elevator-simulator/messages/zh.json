@@ -1,0 +1,15 @@
+{
+  "Building": {
+    "title": "第七区电梯",
+    "floor": "{floor} 层"
+  },
+  "ControlPanel": {
+    "title": "选择楼层"
+  },
+  "Internal": {
+    "status": "系统状态：",
+    "online": "在线",
+    "authorized": "仅限授权人员",
+    "control": "内部控制"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "Building": {
+    "title": "Sector 7 Elevator",
+    "floor": "Lvl {floor}"
+  },
+  "ControlPanel": {
+    "title": "Select Level"
+  },
+  "Internal": {
+    "status": "System Status: ",
+    "online": "ONLINE",
+    "authorized": "Authorized Personnel Only",
+    "control": "INTERNAL CONTROL"
+  }
+}
